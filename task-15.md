@@ -1,0 +1,1 @@
+change from if function to dict
