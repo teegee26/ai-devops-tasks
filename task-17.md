@@ -1,0 +1,1 @@
+generate getCompletedTaskTitles that handle array :)
