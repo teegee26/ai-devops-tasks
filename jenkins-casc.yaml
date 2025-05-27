@@ -1,0 +1,76 @@
+jenkins:
+  systemMessage: "Jenkins configured as code!"
+  numExecutors: 4
+  scmCheckoutRetryCount: 2
+  quietPeriod: 5
+  markupFormatter:
+    plainText:
+      disableSyntaxHighlighting: false
+  slaveAgentPort: 50000
+  remotingSecurity:
+    enabled: true
+
+unclassified:
+  location:
+    url: "http://localhost:8080/"
+    adminAddress: "admin@example.com"
+  buildTimeout:
+    timeoutMinutes: 30
+    failBuild: true
+
+tool:
+  maven:
+    installations:
+      - name: "Maven 3.8.6"
+        home: "/opt/maven"
+  nodejs:
+    installations:
+      - name: "NodeJS 18"
+        home: "/opt/nodejs"
+  dockerTool:
+    installations:
+      - name: "Docker"
+        home: "/usr/bin/docker"
+
+plugins:
+  required:
+    - workflow-aggregator
+    - credentials
+    - git
+    - blueocean
+    - docker-plugin
+    - nodejs
+    - pipeline-stage-view
+    - configuration-as-code
+
+jobs:
+  - script: >
+      pipelineJob('example-pipeline') {
+        definition {
+          cps {
+            script("""
+              pipeline {
+                agent any
+                stages {
+                  stage('Build') {
+                    steps {
+                      echo 'Building...'
+                    }
+                  }
+                  stage('Test') {
+                    steps {
+                      echo 'Testing...'
+                    }
+                  }
+                  stage('Deploy') {
+                    steps {
+                      echo 'Deploying...'
+                    }
+                  }
+                }
+              }
+            """)
+            sandbox(true)
+          }
+        }
+      }
