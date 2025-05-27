@@ -1,1 +1,1 @@
-# ai-devops-tasks
+# simple task api
